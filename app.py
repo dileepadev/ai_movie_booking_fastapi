@@ -9,6 +9,6 @@ app = FastAPI()
 def read_root():
     return {"Hello": "World"}
 
-@app.get("/movies", response_model=MoviesResponse)
+@app.get("/v1/movies", response_model=MoviesResponse)
 def get_movies():
     return movies_data

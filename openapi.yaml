@@ -5,7 +5,8 @@ info:
   description: API for retrieving movie booking details such as showtimes, halls, seat availability, and ticket prices.
 
 servers:
-  - url: https://api.moviebookings.com/v1
+  - url: https://ai-booking-api-001.azurewebsites.net/v1/movies
+    description: Production server
 
 paths:
   /movies:
