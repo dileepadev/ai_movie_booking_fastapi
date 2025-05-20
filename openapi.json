@@ -1,0 +1,172 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Movie Booking API",
+    "version": "1.0.0",
+    "description": "API for retrieving movie booking details such as showtimes, halls, seat availability, and ticket prices."
+  },
+  "servers": [
+    {
+      "url": "https://ai-booking-api-001.azurewebsites.net/v1/movies"
+    }
+  ],
+  "paths": {
+    "/movies": {
+      "get": {
+        "summary": "Get list of all movies",
+        "responses": {
+          "200": {
+            "description": "List of available movies",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Movie"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/{title}": {
+      "get": {
+        "summary": "Get details of a specific movie",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "title",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Title of the movie"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Movie details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Movie"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Movie not found"
+          }
+        }
+      }
+    },
+    "/movies/{title}/shows": {
+      "get": {
+        "summary": "Get all shows for a specific movie",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "title",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Title of the movie"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of shows",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Show"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Movie not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Movie": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "cinema": {
+            "type": "string"
+          },
+          "shows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Show"
+            }
+          }
+        }
+      },
+      "Show": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "time": {
+            "type": "string",
+            "format": "time"
+          },
+          "hall": {
+            "type": "string"
+          },
+          "seats": {
+            "$ref": "#/components/schemas/SeatInfo"
+          }
+        }
+      },
+      "SeatInfo": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer"
+          },
+          "available": {
+            "type": "integer"
+          },
+          "types": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/SeatType"
+            }
+          }
+        }
+      },
+      "SeatType": {
+        "type": "object",
+        "properties": {
+          "available": {
+            "type": "integer"
+          },
+          "price": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      }
+    }
+  }
+}
