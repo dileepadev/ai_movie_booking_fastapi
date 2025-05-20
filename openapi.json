@@ -1,97 +1,82 @@
 {
-  "openapi": "3.0.3",
+  "openapi": "3.1.0",
   "info": {
-    "title": "Movie Booking API",
-    "version": "1.0.0",
-    "description": "API for retrieving movie booking details such as showtimes, halls, seat availability, and ticket prices."
+    "title": "FastAPI",
+    "version": "0.1.0"
   },
   "servers": [
     {
-      "url": "https://ai-booking-api-001.azurewebsites.net/v1/movies"
+      "url": "https://ai-booking-api-001.azurewebsites.net/v1/movies",
+      "description": "Production server"
     }
   ],
   "paths": {
-    "/movies": {
+    "/": {
       "get": {
-        "summary": "Get list of all movies",
+        "summary": "Read Root",
+        "operationId": "read_root__get",
         "responses": {
           "200": {
-            "description": "List of available movies",
+            "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Movie"
-                  }
-                }
+                "schema": {}
               }
             }
           }
         }
       }
     },
-    "/movies/{title}": {
+    "/v1/bookings": {
       "get": {
-        "summary": "Get details of a specific movie",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "title",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Title of the movie"
-          }
-        ],
+        "summary": "Get Bookings",
+        "operationId": "get_bookings_v1_bookings_get",
         "responses": {
           "200": {
-            "description": "Movie details",
+            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Movie"
+                  "$ref": "#/components/schemas/BookingsResponse"
                 }
               }
             }
-          },
-          "404": {
-            "description": "Movie not found"
           }
         }
-      }
-    },
-    "/movies/{title}/shows": {
-      "get": {
-        "summary": "Get all shows for a specific movie",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "title",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Title of the movie"
-          }
-        ],
+      },
+      "post": {
+        "summary": "Book Movie",
+        "operationId": "book_movie_v1_bookings_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookingRequest"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
-            "description": "List of shows",
+            "description": "Successful Response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Show"
-                  }
+                  "$ref": "#/components/schemas/BookingsResponse"
                 }
               }
             }
           },
-          "404": {
-            "description": "Movie not found"
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
           }
         }
       }
@@ -99,73 +84,183 @@
   },
   "components": {
     "schemas": {
-      "Movie": {
-        "type": "object",
+      "BookingRequest": {
         "properties": {
+          "movie_id": {
+            "type": "integer",
+            "title": "Movie Id"
+          },
+          "show_date": {
+            "type": "string",
+            "title": "Show Date"
+          },
+          "show_time": {
+            "type": "string",
+            "title": "Show Time"
+          },
+          "seat_type": {
+            "type": "string",
+            "title": "Seat Type"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "movie_id",
+          "show_date",
+          "show_time",
+          "seat_type",
+          "count"
+        ],
+        "title": "BookingRequest"
+      },
+      "BookingsResponse": {
+        "properties": {
+          "movies": {
+            "items": {
+              "$ref": "#/components/schemas/Movie"
+            },
+            "type": "array",
+            "title": "Movies"
+          }
+        },
+        "type": "object",
+        "required": ["movies"],
+        "title": "BookingsResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Movie": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
           "title": {
-            "type": "string"
+            "type": "string",
+            "title": "Title"
           },
           "language": {
-            "type": "string"
+            "type": "string",
+            "title": "Language"
           },
           "cinema": {
-            "type": "string"
+            "type": "string",
+            "title": "Cinema"
           },
           "shows": {
-            "type": "array",
             "items": {
               "$ref": "#/components/schemas/Show"
-            }
+            },
+            "type": "array",
+            "title": "Shows"
           }
-        }
-      },
-      "Show": {
+        },
         "type": "object",
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "time": {
-            "type": "string",
-            "format": "time"
-          },
-          "hall": {
-            "type": "string"
-          },
-          "seats": {
-            "$ref": "#/components/schemas/SeatInfo"
-          }
-        }
-      },
-      "SeatInfo": {
-        "type": "object",
-        "properties": {
-          "total": {
-            "type": "integer"
-          },
-          "available": {
-            "type": "integer"
-          },
-          "types": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/SeatType"
-            }
-          }
-        }
+        "required": ["id", "title", "language", "cinema", "shows"],
+        "title": "Movie"
       },
       "SeatType": {
-        "type": "object",
         "properties": {
           "available": {
-            "type": "integer"
+            "type": "integer",
+            "title": "Available"
           },
           "price": {
             "type": "number",
-            "format": "float"
+            "title": "Price"
           }
-        }
+        },
+        "type": "object",
+        "required": ["available", "price"],
+        "title": "SeatType"
+      },
+      "Seats": {
+        "properties": {
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "available": {
+            "type": "integer",
+            "title": "Available"
+          },
+          "types": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/SeatType"
+            },
+            "type": "object",
+            "title": "Types"
+          }
+        },
+        "type": "object",
+        "required": ["total", "available", "types"],
+        "title": "Seats"
+      },
+      "Show": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "title": "Date"
+          },
+          "time": {
+            "type": "string",
+            "title": "Time"
+          },
+          "hall": {
+            "type": "string",
+            "title": "Hall"
+          },
+          "seats": {
+            "$ref": "#/components/schemas/Seats"
+          }
+        },
+        "type": "object",
+        "required": ["date", "time", "hall", "seats"],
+        "title": "Show"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": ["loc", "msg", "type"],
+        "title": "ValidationError"
       }
     }
   }

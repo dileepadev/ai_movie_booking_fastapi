@@ -1,120 +1,123 @@
 movies_data = {
-  "movies": [
-    {
-      "title": "Inception",
-      "language": "English",
-      "cinema": "Cineplex Downtown",
-      "shows": [
+    "movies": [
         {
-          "date": "2025-05-21",
-          "time": "18:30",
-          "hall": "Hall 1",
-          "seats": {
-            "total": 100,
-            "available": 45,
-            "types": {
-              "Regular": {
-                "available": 30,
-                "price": 10.0
-              },
-              "Premium": {
-                "available": 15,
-                "price": 15.0
-              }
-            }
-          }
+            "id": 1,
+            "title": "Jurassic World Rebirth",
+            "language": "English",
+            "cinema": "IMAX Grand Central",
+            "shows": [
+                {
+                    "date": "2025-07-03",
+                    "time": "17:30",
+                    "hall": "IMAX Hall",
+                    "seats": {
+                      "total": 180,
+                      "available": 180,
+                      "types": {
+                          "Standard": {
+                              "available": 100,
+                              "price": 14.0
+                          },
+                          "VIP": {
+                              "available": 80,
+                              "price": 25.0
+                          }
+                      }
+                    }
+                }
+            ]
         },
         {
-          "date": "2025-05-21",
-          "time": "21:00",
-          "hall": "Hall 3",
-          "seats": {
-            "total": 120,
-            "available": 80,
-            "types": {
-              "Regular": {
-                "available": 60,
-                "price": 10.0
-              },
-              "Premium": {
-                "available": 20,
-                "price": 15.0
-              }
-            }
-          }
-        }
-      ]
-    },
-    {
-      "title": "Dune: Part Two",
-      "language": "English",
-      "cinema": "IMAX Grand Central",
-      "shows": [
-        {
-          "date": "2025-05-22",
-          "time": "17:00",
-          "hall": "IMAX Hall",
-          "seats": {
-            "total": 150,
-            "available": 50,
-            "types": {
-              "Standard": {
-                "available": 30,
-                "price": 12.0
-              },
-              "VIP": {
-                "available": 20,
-                "price": 20.0
-              }
-            }
-          }
-        }
-      ]
-    },
-    {
-      "title": "The Grand Budapest Hotel",
-      "language": "English",
-      "cinema": "ArtHouse Cinema",
-      "shows": [
-        {
-          "date": "2025-05-23",
-          "time": "19:00",
-          "hall": "Hall 2",
-          "seats": {
-            "total": 80,
-            "available": 35,
-            "types": {
-              "Standard": {
-                "available": 20,
-                "price": 9.0
-              },
-              "Premium": {
-                "available": 15,
-                "price": 13.0
-              }
-            }
-          }
+            "id": 2,
+            "title": "Superman",
+            "language": "English",
+            "cinema": "Cineplex Downtown",
+            "shows": [
+                {
+                    "date": "2025-07-12",
+                    "time": "18:00",
+                    "hall": "Hall 1",
+                    "seats": {
+                      "total": 120,
+                      "available": 120,
+                      "types": {
+                          "Regular": {
+                              "available": 80,
+                              "price": 12.0
+                          },
+                          "Premium": {
+                              "available": 40,
+                              "price": 18.0
+                          }
+                      }
+                    }
+                },
+                {
+                    "date": "2025-07-13",
+                    "time": "20:30",
+                    "hall": "Hall 3",
+                    "seats": {
+                        "total": 120,
+                        "available": 120,
+                        "types": {
+                            "Regular": {
+                                "available": 90,
+                                "price": 12.0
+                            },
+                            "Premium": {
+                                "available": 30,
+                                "price": 18.0
+                            }
+                        }
+                    }
+                }
+            ]
         },
         {
-          "date": "2025-05-24",
-          "time": "16:30",
-          "hall": "Hall 2",
-          "seats": {
-            "total": 80,
-            "available": 60,
-            "types": {
-              "Standard": {
-                "available": 40,
-                "price": 9.0
-              },
-              "Premium": {
-                "available": 20,
-                "price": 13.0
-              }
-            }
-          }
+            "id": 3,
+            "title": "Fantastic Four: First Steps",
+            "language": "English",
+            "cinema": "ArtHouse Cinema",
+            "shows": [
+                {
+                    "date": "2025-07-26",
+                    "time": "19:30",
+                    "hall": "Hall 1",
+                    "seats": {
+                      "total": 90,
+                      "available": 90,
+                      "types": {
+                          "Standard": {
+                              "available": 60,
+                              "price": 11.0
+                          },
+                          "Premium": {
+                              "available": 30,
+                              "price": 16.0
+                          }
+                      }
+                    }
+                },
+                {
+                    "date": "2025-07-27",
+                    "time": "21:00",
+                    "hall": "Hall 2",
+                    "seats": {
+                        "total": 90,
+                        "available": 90,
+                        "types": {
+                            "Standard": {
+                                "available": 50,
+                                "price": 11.0
+                            },
+                            "Premium": {
+                                "available": 40,
+                                "price": 16.0
+                            }
+                        }
+                    }
+                }
+            ]
         }
-      ]
-    }
-  ]
+    ]
 }
